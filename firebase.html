@@ -18,9 +18,20 @@
     };
   // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
+    //Check login status
+     firebase.auth().onAuthStateChanged(function(user) {
+ 　　　 if (user) {
+    　　// User is signed in.
+    　　   Console.log("oK",user.email);
+        // ...
+  　 } else {
+           Console.log("not sign in");
+  　}
+　　});
+    //support facebook login
     let provider = new firebase.auth.FacebookAuthProvider();
     provider.addScope("email,user_birthday");
-
+  //onclik發生的事
     function run(){
         firebase.auth().signInWithPopup(provider).then(function(result) {
   // This gives you a Facebook Access Token. You can use it to access the Facebook API.
