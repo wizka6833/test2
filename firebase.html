@@ -23,7 +23,8 @@
  　　　 if (user) {
     　　// User is signed in.
     　　   console.log("oK",user.email);
-        // ...
+           let logined = document.querySelector("#logined");
+           logined.style.display = "none";
   　 } else {
            console.log("not sign in");
   　}
@@ -48,6 +49,6 @@
 </head>
 <body>
     <h3>facebook login</h3>
-    <button onclick="run();"></button>
+    <button onclick="run();" id="logined">login</button>
 </body>
 </html>
