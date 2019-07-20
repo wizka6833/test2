@@ -64,7 +64,7 @@
     });
   }*/
   function testAPI() {
-    /*FB.api('/me?fields=id,email,name,gender,photos',function(response) {
+    FB.api('/me?fields=id,email,name,gender,photos',function(response) {
       console.log('Successful login for: ' + response.name);
       let loginok = document.querySelector('#loginok');
       loginok.innerHTML ="使用者的名字:"+response.name+"</br>"+"使用者的ID:"+response.id+"</br>"+"使用者的email:"+response.email+"</br>"+"使用者的性別:"+response.gender+"</br>"+"<img src = 'https://graph.facebook.com/"+response.id+"/picture?type=large' />";
@@ -72,10 +72,11 @@
     });
     FB.api('/me/feed',function(response){
         console.log(response);
-    });*/
+    });
+  }
   
    //抓取使用者的管理的粉絲專業//
-   let pageToken , pageId;
+   /*let pageToken , pageId;
     FB.api('/me/accounts',function(response){
        console.log(response);
        pageToken = response.data[0].access_token;
@@ -92,12 +93,12 @@
   function share(){
       FB.ui({
       method: 'share',
-      href: 'https://wizka6833.github.io/test/fb.html',
+      href: 'https://wizka6833.github.io/test2/fb3.html',
     }, function(response){
         console.log(response);
         alert("shared");
     });
-   };
+   };*/
  
 </script>
 
