@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Facebook 登入就發財拉</title>
+<meta charset="UTF-8">
+</head>
+<body>
+<script>
+  // This is called with the results from from FB.getLoginStatus().
+  function statusChangeCallbak(response) {
+    console.log('statusChangeCallback');
+    console.log(response);
+    let loginin = document.querySelector("#loginin");
+    let loginok = document.querySelector("#loginok");
+    loginin.style.display = "none";
+    loginok.style.dispy = "none";
+    if (response.status === 'connected') {
+      // Logged into your app and Facebook.
+      testAPI();
+      loginok.style.display = "block";
+    } else {
+      // The person is not logged into your app or we are unable to tell.
+      loginin.style.display = "block";
+    }
+  };
+  function login(){
+      FB.login(function(response){
+          statusChangeCallbak(response);
+          },{scope:"email,user_gender,user_photos,user_posts,manage_pages,publish_pages"}
+      );
+  };
+  // This function is called when someone finishes with the Login
+  // Button.  See the onlogin handler attached to it in the sample
+  // code below.
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '347324772854044',
+      cookie     : true,  // enable cookies to allow the server to access 
+                          // the session
+      xfbml      : true,  // parse social plugins on this page
+      version    : 'v3.3' // The Graph API version to use for the call
+    });
+    
+    FB.getLoginStatus(function(response) {
+      statusChangeCallbak(response);
+    });
+  };
+  
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "https://connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+  // Here we run a very simple test of the Graph API after login is
+  // successful.  See statusChangeCallback() for when this call is made.
+  /*function testAPI() {
+    FB.api('/me?fields=id,email,name,gender,photos',function(response) {
+      console.log('Successful login for: ' + response.name);
+      let loginok = document.querySelector('#loginok');
+      loginok.innerHTML ="使用者的名字:"+response.name+"</br>"+"使用者的ID:"+response.id+"</br>"+"使用者的email:"+response.email+"</br>"+"使用者的性別:"+response.gender+"</br>"+"使用者的照片:"+response.photos;
+      console.log(response);
+    });
+  }*/
+  function testAPI() {
+    /*FB.api('/me?fields=id,email,name,gender,photos',function(response) {
+      console.log('Successful login for: ' + response.name);
+      let loginok = document.querySelector('#loginok');
+      loginok.innerHTML ="使用者的名字:"+response.name+"</br>"+"使用者的ID:"+response.id+"</br>"+"使用者的email:"+response.email+"</br>"+"使用者的性別:"+response.gender+"</br>"+"<img src = 'https://graph.facebook.com/"+response.id+"/picture?type=large' />";
+      console.log(response);
+    });
+    FB.api('/me/feed',function(response){
+        console.log(response);
+    });*/
+  
+   //抓取使用者的管理的粉絲專業//
+   let pageToken , pageId;
+    FB.api('/me/accounts',function(response){
+       console.log(response);
+       pageToken = response.data[0].access_token;
+       pageId = response.data[0].id;
+       }); 
+   };
+    function post (){
+      let message = document.querySelector("#message").value;
+      FB.api("/"+pageId+"/feed?access_token="+pageToken,"POST",{message:message},function(response){
+           console.log(response);
+           alert("ok")
+      });
+  };
+  function share(){
+      FB.ui({
+      method: 'share',
+      href: 'https://wizka6833.github.io/test/fb.html',
+    }, function(response){
+        console.log(response);
+        alert("shared");
+    });
+   };
+ 
+</script>
+
+<h3 style="text-align: center; color: rgb(11, 31, 216);">Facebook Login</h3>
+<button onclick="share();">share</button>
+<div id="loginin" style="display: none;text-align: center;width: 200px;height: 50px;">  
+<button onclick="login()" style="color: aqua; text-align: center; margin: 10px 10px">登入</button>
+</div>
+<div id="loginok" style="display: none;text-align: center;color: burlywood;background-color: chartreuse">歡迎登入
+    Message<input id="message" /><button onclick="post()"></button>
+</div>
+
+
+
+
+</body>
+</html>
+</html>
